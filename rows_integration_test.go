@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/randallmlough/pgxscan/testdata"
+	"github.com/dacohen/pgxscan/testdata"
 
-	"github.com/randallmlough/pgxscan"
+	"github.com/dacohen/pgxscan"
 	"github.com/stretchr/testify/require"
 )
 

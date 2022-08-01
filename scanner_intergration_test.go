@@ -6,7 +6,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/randallmlough/pgxscan"
+	"github.com/dacohen/pgxscan"
 )
 
 func Test_NewScanner(t *testing.T) {

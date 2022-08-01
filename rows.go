@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/dacohen/sqlmaper"
 	"github.com/jackc/pgx/v4"
-	"github.com/randallmlough/sqlmaper"
 )
 
 type rows struct {

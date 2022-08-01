@@ -7,10 +7,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/randallmlough/pgxscan/testdata"
+	"github.com/dacohen/pgxscan/testdata"
 	"github.com/stretchr/testify/require"
 
-	"github.com/randallmlough/pgxscan"
+	"github.com/dacohen/pgxscan"
 )
 
 func Test_row_Variadic(t *testing.T) {
