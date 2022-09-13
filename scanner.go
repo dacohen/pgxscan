@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dacohen/sqlmaper"
+	sqlmaper "github.com/dacohen/pgxscan/internal/sqlmapper"
 	"github.com/jackc/pgx/v4"
 )
 

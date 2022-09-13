@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 package pgxscan_test
@@ -582,7 +583,7 @@ func Test_rows_IdentifyNullColumn(t *testing.T) {
 	require.Equal(
 		t,
 		err.Error(),
-		"can't scan into dest[1] (field 'name'): cannot assign NULL to *string",
+		"can't scan into dest[1] (field 'name'): cannot scan null into *string",
 	)
 }
 

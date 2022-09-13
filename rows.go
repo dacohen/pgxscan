@@ -5,7 +5,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/dacohen/sqlmaper"
+	sqlmaper "github.com/dacohen/pgxscan/internal/sqlmapper"
+
 	"github.com/jackc/pgx/v4"
 )
 
@@ -37,10 +38,12 @@ var QueryColumnNotatePrefix = "notate:"
 // variable)
 //
 // From columns:
-//    ["a", "b", "notate:whatever", "a", "b"]
+//
+//	["a", "b", "notate:whatever", "a", "b"]
 //
 // Will return:
-//    ["a", "b", "notate:whatever", "whatever.a", "whatever.b"]
+//
+//	["a", "b", "notate:whatever", "whatever.a", "whatever.b"]
 //
 // Background info:
 //
@@ -53,11 +56,11 @@ var QueryColumnNotatePrefix = "notate:"
 // a couple of nested structs, however, if  we use column notation we can
 // rewrite the query as:
 //
-//   SELECT 0 as "notate:a",
-//          a.*,
-//          0 as "notate:b",
-//          b.*
-//   FROM ...
+//	SELECT 0 as "notate:a",
+//	       a.*,
+//	       0 as "notate:b",
+//	       b.*
+//	FROM ...
 //
 // This way, everything that comes after column "notate:a" will be treated as if
 // we would have defined an alias for each column named "a.<col>", and so on
