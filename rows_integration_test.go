@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dacohen/pgxscan/testdata"
+	"github.com/rainforestpay/pgxscan/testdata"
 
-	"github.com/dacohen/pgxscan"
+	"github.com/rainforestpay/pgxscan"
 	"github.com/stretchr/testify/require"
 )
 
@@ -583,7 +583,7 @@ func Test_rows_IdentifyNullColumn(t *testing.T) {
 	require.Equal(
 		t,
 		err.Error(),
-		"can't scan into dest[1] (field 'name'): cannot scan null into *string",
+		"can't scan into dest[1] (field 'name'): cannot scan NULL into *string",
 	)
 }
 
@@ -608,7 +608,7 @@ func Test_rows_IdentifyWrongTypeForColumn(t *testing.T) {
 	require.Equal(
 		t,
 		err.Error(),
-		"can't scan into dest[2] (field 'email'): unable to assign to *int",
+		"can't scan into dest[2] (field 'email'): cannot scan varchar (OID 1043) in text format into *int",
 	)
 }
 

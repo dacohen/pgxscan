@@ -10,10 +10,11 @@ import (
 
 type (
 	ColumnData struct {
-		ColumnName string
-		FieldIndex []int
-		GoType     reflect.Type
-		Optional   bool
+		ColumnName   string
+		FieldIndex   []int
+		GoType       reflect.Type
+		Optional     bool
+		TruncatedPtr bool
 	}
 	ColumnMap map[string]ColumnData
 )
@@ -239,17 +240,21 @@ func createColumnMap(t reflect.Type, fieldIndex []int, prefixes []string, option
 			} else if f.PkgPath == "" {
 				// if PkgPath is empty then it is an exported field
 				columnName = strings.Join(append(prefixes, columnName), ".")
-				var goType reflect.Type
+				goType := f.Type
+				isTrunc := false
 				if optional {
-					goType = reflect.PtrTo(f.Type)
-				} else {
-					goType = f.Type
+					if f.Type.Kind() != reflect.Pointer {
+						goType = reflect.PtrTo(goType)
+					} else {
+						isTrunc = true
+					}
 				}
 				cm[columnName] = ColumnData{
-					ColumnName: columnName,
-					FieldIndex: append(fieldIndex, f.Index...),
-					GoType:     goType,
-					Optional:   optional,
+					ColumnName:   columnName,
+					FieldIndex:   append(fieldIndex, f.Index...),
+					GoType:       goType,
+					Optional:     optional,
+					TruncatedPtr: isTrunc,
 				}
 			}
 		}

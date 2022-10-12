@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 package pgxscan_test
@@ -7,7 +8,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 const defaultDbURI = "postgres://root:pass@pgxscan_postgres:5432/pgxscan?sslmode=disable"
@@ -25,7 +26,7 @@ func TestMain(m *testing.M) {
 	}
 
 	var err error
-	testDB, err = pgxpool.Connect(ctxb, dbURI)
+	testDB, err = pgxpool.New(ctxb, dbURI)
 	if err != nil {
 		panic(err)
 	}

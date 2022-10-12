@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 package pgxscan_test
@@ -7,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dacohen/pgxscan/testdata"
+	"github.com/rainforestpay/pgxscan/testdata"
 	"github.com/stretchr/testify/require"
 
-	"github.com/dacohen/pgxscan"
+	"github.com/rainforestpay/pgxscan"
 )
 
 func Test_row_Variadic(t *testing.T) {

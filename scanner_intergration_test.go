@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 package pgxscan_test
@@ -6,7 +7,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/dacohen/pgxscan"
+	"github.com/rainforestpay/pgxscan"
 )
 
 func Test_NewScanner(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dacohen/pgxscan/testdata"
+	"github.com/rainforestpay/pgxscan/testdata"
 )
 
 func Test_scanStruct(t *testing.T) {
