@@ -1,4 +1,4 @@
-package sqlmaper
+package sqlmapper
 
 import (
 	"database/sql"
