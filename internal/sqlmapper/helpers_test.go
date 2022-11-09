@@ -1,10 +1,11 @@
-package sqlmaper
+package sqlmapper
 
 import (
 	"database/sql"
-	"github.com/stretchr/testify/suite"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/suite"
 )
 
 var (

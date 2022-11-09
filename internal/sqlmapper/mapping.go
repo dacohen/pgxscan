@@ -1,4 +1,4 @@
-package sqlmaper
+package sqlmapper
 
 import (
 	"fmt"
@@ -249,9 +249,14 @@ func createColumnMap(t reflect.Type, fieldIndex []int, prefixes []string, option
 						isTrunc = true
 					}
 				}
+
+				// Since append can re-use the underlying slice, we need to ensure a fresh copy on each iteration
+				newFieldIndex := make([]int, len(fieldIndex))
+				copy(newFieldIndex, fieldIndex)
+
 				cm[columnName] = ColumnData{
 					ColumnName:   columnName,
-					FieldIndex:   append(fieldIndex, f.Index...),
+					FieldIndex:   append(newFieldIndex, f.Index...),
 					GoType:       goType,
 					Optional:     optional,
 					TruncatedPtr: isTrunc,

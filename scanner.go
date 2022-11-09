@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5"
-	sqlmaper "github.com/rainforestpay/pgxscan/internal/sqlmapper"
+	"github.com/rainforestpay/pgxscan/internal/sqlmapper"
 )
 
 type (
@@ -85,7 +85,7 @@ func ScanStruct(scan scannerFunc, i interface{}, cols []string, matchAllColumnsT
 	if cols == nil {
 		return ErrNoCols
 	}
-	cm, err := sqlmaper.GetColumnMap(i)
+	cm, err := sqlmapper.GetColumnMap(i)
 	if err != nil {
 		return err
 	}
@@ -121,7 +121,7 @@ func ScanStruct(scan scannerFunc, i interface{}, cols []string, matchAllColumnsT
 		colDesc := cm[col]
 		if colDesc.Optional {
 			scanVal := reflect.ValueOf(scans[index])
-			if colDesc.TruncatedPtr && !scanVal.IsNil() && !scanVal.Elem().IsZero() {
+			if colDesc.TruncatedPtr && !scanVal.IsNil() && !scanVal.Elem().IsNil() {
 				record[col] = scanVal.Interface()
 			} else if !scanVal.Elem().IsNil() {
 				record[col] = scanVal.Elem().Interface()
@@ -131,7 +131,7 @@ func ScanStruct(scan scannerFunc, i interface{}, cols []string, matchAllColumnsT
 		}
 	}
 
-	sqlmaper.AssignStructVals(i, record, cm)
+	sqlmapper.AssignStructVals(i, record, cm)
 
 	return nil
 }
@@ -179,36 +179,36 @@ func isVariadic(i ...interface{}) bool {
 func isBuiltin(i interface{}) bool {
 	switch i.(type) {
 	case
-			string,
-			uint, uint8, uint16, uint32, uint64,
-			int, int8, int16, int32, int64,
-			complex64, complex128,
-			float32, float64,
-			bool:
+		string,
+		uint, uint8, uint16, uint32, uint64,
+		int, int8, int16, int32, int64,
+		complex64, complex128,
+		float32, float64,
+		bool:
 		return true
 	case
-			*string,
-			*uint, *uint8, *uint16, *uint32, *uint64,
-			*int, *int8, *int16, *int32, *int64,
-			*complex64, *complex128,
-			*float32, *float64,
-			*bool:
+		*string,
+		*uint, *uint8, *uint16, *uint32, *uint64,
+		*int, *int8, *int16, *int32, *int64,
+		*complex64, *complex128,
+		*float32, *float64,
+		*bool:
 		return true
 	case
-			[]string,
-			[]uint, []uint8, []uint16, []uint32, []uint64,
-			[]int, []int8, []int16, []int32, []int64,
-			[]complex64, []complex128,
-			[]float32, []float64,
-			[]bool:
+		[]string,
+		[]uint, []uint8, []uint16, []uint32, []uint64,
+		[]int, []int8, []int16, []int32, []int64,
+		[]complex64, []complex128,
+		[]float32, []float64,
+		[]bool:
 		return true
 	case
-			*[]string,
-			*[]uint, *[]uint8, *[]uint16, *[]uint32, *[]uint64,
-			*[]int, *[]int8, *[]int16, *[]int32, *[]int64,
-			*[]complex64, *[]complex128,
-			*[]float32, *[]float64,
-			*[]bool:
+		*[]string,
+		*[]uint, *[]uint8, *[]uint16, *[]uint32, *[]uint64,
+		*[]int, *[]int8, *[]int16, *[]int32, *[]int64,
+		*[]complex64, *[]complex128,
+		*[]float32, *[]float64,
+		*[]bool:
 		return true
 	case time.Time, *time.Time:
 		return true

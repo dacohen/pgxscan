@@ -1,4 +1,4 @@
-package sqlmaper
+package sqlmapper
 
 import (
 	"database/sql"
@@ -1147,9 +1147,14 @@ func (rt *reflectTest) TestGetColumnMap_withTaggedStructField() {
 
 func (rt *reflectTest) TestGetColumnMap_withTaggedStructPointerField() {
 
+	type TestNestedEmbed struct {
+		String *string `db:"string"`
+	}
+
 	type TestEmbedded struct {
-		Bool   bool
-		Valuer *sql.NullString
+		Bool            bool
+		Valuer          *sql.NullString
+		TestNestedEmbed *TestNestedEmbed `db:"test_nested" scan:"notate"`
 	}
 
 	type TestStruct struct {
@@ -1160,6 +1165,7 @@ func (rt *reflectTest) TestGetColumnMap_withTaggedStructPointerField() {
 	var ts TestStruct
 	cm, err := GetColumnMap(&ts)
 	rt.NoError(err)
+
 	rt.Equal(ColumnMap{
 		"test_embedded.bool": {
 			ColumnName: "test_embedded.bool",
@@ -1168,10 +1174,18 @@ func (rt *reflectTest) TestGetColumnMap_withTaggedStructPointerField() {
 			Optional:   true,
 		},
 		"test_embedded.valuer": {
-			ColumnName: "test_embedded.valuer",
-			FieldIndex: []int{0, 1},
-			GoType:     reflect.PtrTo(reflect.TypeOf(&sql.NullString{})),
-			Optional:   true,
+			ColumnName:   "test_embedded.valuer",
+			FieldIndex:   []int{0, 1},
+			GoType:       reflect.TypeOf(&sql.NullString{}),
+			Optional:     true,
+			TruncatedPtr: true,
+		},
+		"test_embedded.test_nested.string": {
+			ColumnName:   "test_embedded.test_nested.string",
+			FieldIndex:   []int{0, 2, 0},
+			GoType:       reflect.PointerTo(reflect.TypeOf("")),
+			Optional:     true,
+			TruncatedPtr: true,
 		},
 		"bool": {
 			ColumnName: "bool",
