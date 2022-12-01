@@ -219,9 +219,9 @@ func createColumnMap(t reflect.Type, fieldIndex []int, prefixes []string, option
 
 				if dbTag.IsNamed() && !options.Contains(followTagName) {
 					subPrefixes := append(prefixes, columnName)
-					subColMaps = append(subColMaps, createColumnMap(f.Type, subFieldIndexes, subPrefixes, false))
+					subColMaps = append(subColMaps, createColumnMap(f.Type, subFieldIndexes, subPrefixes, optional))
 				} else {
-					subColMaps = append(subColMaps, createColumnMap(f.Type, subFieldIndexes, prefixes, false))
+					subColMaps = append(subColMaps, createColumnMap(f.Type, subFieldIndexes, prefixes, optional))
 				}
 
 			} else if !implementsScanner(f.Type) && (isNotated() || options.Contains(notateTagName)) && !options.Contains(embedTagName) {
@@ -231,7 +231,7 @@ func createColumnMap(t reflect.Type, fieldIndex []int, prefixes []string, option
 				if f.Type.Kind() == reflect.Ptr {
 					subCm = createColumnMap(f.Type.Elem(), subFieldIndexes, subPrefixes, true)
 				} else {
-					subCm = createColumnMap(f.Type, subFieldIndexes, subPrefixes, false)
+					subCm = createColumnMap(f.Type, subFieldIndexes, subPrefixes, optional)
 				}
 				if len(subCm) != 0 {
 					subColMaps = append(subColMaps, subCm)
